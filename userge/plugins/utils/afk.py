@@ -14,7 +14,7 @@ AFK_COLLECTION = get_collection("AFK")
 IS_AFK = False
 IS_AFK_FILTER = filters.create(lambda _, __, ___: bool(IS_AFK))
 REASON = ""
-TIME = 10.30
+TIME = 0.0
 USERS = {}
 
 
@@ -43,7 +43,11 @@ async def active_afk(message: Message) -> None:
     """ turn on or off afk mode """
     global REASON, IS_AFK, TIME  # pylint: disable=global-statement
     IS_AFK = True
-    TIME = time.time()
+    data = await SAVED_SETTINGS.find_one({"_id": "AFK"})
+    if data:
+        TIME = data["time"]
+    else:
+        TIME = time.time()
     REASON = message.input_str
     await asyncio.gather(
         CHANNEL.log(f"You went AFK! : `{REASON}`"),
