@@ -14,7 +14,7 @@ AFK_COLLECTION = get_collection("AFK")
 IS_AFK = False
 IS_AFK_FILTER = filters.create(lambda _, __, ___: bool(IS_AFK))
 REASON = ""
-TIME = 0.0
+TIME = 10.30
 USERS = {}
 
 
